@@ -93,8 +93,10 @@ class Index {
 
   setCanvasSize() {
     const gl = this.gl;
-    this.canvas.width = window.innerWidth;
-    this.canvas.height = window.innerHeight;
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+    this.canvas.width = width;
+    this.canvas.height = height;
     gl.viewport(0, 0, this.canvas.width, this.canvas.height);
   }
 
@@ -112,6 +114,13 @@ class Index {
   }
 
   resize() {
+    console.log('resize');
+    const gl = this.gl;
+    const uniformResolutionLocation = this.uniLocation[2];
+    gl['uniform2fv'](uniformResolutionLocation, [
+      window.innerWidth,
+      window.innerHeight
+    ]);
     this.setCanvasSize();
   }
 
@@ -124,7 +133,7 @@ class Index {
     const utils = this.webGLUtils;
     const deltaTime = utils.getDeltaTime();
     this.time += deltaTime;
-
+    console.log(this.time);
     gl.clear(gl.COLOR_BUFFER_BIT);
 
     const uniformTimeLocation = this.uniLocation[0];
