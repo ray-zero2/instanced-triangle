@@ -11,7 +11,8 @@ float random (in vec2 st) {
 }
 
 void main () {
-    float aspect = resolution.y / resolution.x;
+    float aspectRatio = resolution.y / resolution.x;
+    vec2 aspect = resolution.y < resolution.x ? vec2(aspectRatio, 1.) : vec2(1., 1./aspectRatio ) ;
 
     // Use lots of sines and cosines to place the circles
     vec2 circleCenter = vec2(cos(theta), sin(theta))
@@ -21,7 +22,7 @@ void main () {
     float rnd = random(circlePoint.xy * theta) ;
     float circleSize = 0.2 + 0.12  * cos(theta * 9.0  - time * 0.5);
 
-    vec2 xy = (circleCenter + circlePoint * circleSize) * vec2(aspect, 1.0);
+    vec2 xy = (circleCenter + circlePoint * circleSize) * aspect;
 
     // Define some pretty colors
     float th = 8.0 * theta + time * 0.5;
